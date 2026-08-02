@@ -1,53 +1,53 @@
-# Implementation Plan - Final Polish & Missing Features
+# Implementation Plan - Premium Flutter App & Responsive Portfolio
 
-This plan covers the remaining features to complete the portfolio, including extra sections, social links, SEO, and a loading screen.
+This plan outlines the development of two high-end Flutter projects: a premium Android UI and a modern responsive portfolio website, sharing a common Material 3 glassmorphism design language.
 
 ## User Review Required
 
-> [!NOTE]
-> **CV Download**: I will add a placeholder for the CV download link. You will need to replace it with your actual hosted PDF URL or add the file to your assets.
-
 > [!IMPORTANT]
-> **SEO Configuration**: The changes to `index.html` are specifically for the web build. Make sure to rebuild the project for web (`flutter build web`) after these changes are applied to see them in the hosted version.
+> **Asset Requirements**: Lottie animations and specific images (projects/logo) are required. I will use placeholder Lottie URLs and network images initially.
+> **Firebase**: Both projects will benefit from Firebase. The Android app will use it for Auth, and the Portfolio for the contact form.
 
 ## Proposed Changes
 
-### [Component: Data & Utilities]
+### 1. Project Infrastructure & Dependencies
 
-#### [MODIFY] [constants.dart](file:///Users/admin/StudioProjects/web_ashi/lib/utils/constants.dart)
-- Add data for "Why Choose Me" section.
-- Add social link URLs.
+#### [MODIFY] [pubspec.yaml](file:///Users/admin/StudioProjects/web_ashi/pubspec.yaml)
+- Add: `animations`, `lottie`, `shimmer`, `visibility_detector`, `scrollable_positioned_list`.
 
-### [Component: UI Sections]
+#### [NEW] Directory Structure
+- `lib/screens/`: Android App screens (Splash, Onboarding, Auth, Dashboard).
+- `lib/widgets/`: Common UI components (Glass cards, Neumorphic buttons, Shimmer).
+- `lib/models/`: Data models for projects, experience, user.
+- `lib/animations/`: Custom animation controllers and transitions.
+- `lib/constants/`: Colors, strings, and theme definitions.
 
-#### [NEW] [why_choose_me.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/why_choose_me.dart)
-- A grid-based section highlighting "Clean Code", "Responsive Design", etc.
+### 2. Premium Android UI Implementation
 
-#### [MODIFY] [hero.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/hero.dart)
-- Add "Download CV" button next to "Contact Me".
+- **Splash Screen**: Animated logo with `flutter_animate`.
+- **Onboarding**: Smooth `PageView` with parallax and shared axis transitions.
+- **Auth Flow**: Glassmorphism login/signup with shared axis page transitions.
+- **Main Dashboard**:
+    - Animated Bottom Navigation Bar.
+    - ListView with `flutter_staggered_animations` and `shimmer` loading.
+    - Hero animations for item details.
 
-#### [MODIFY] [footer.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/footer.dart)
-- Use `FontAwesomeIcons` for GitHub, LinkedIn, and Instagram.
-- Add functional (placeholder) social links.
+### 3. Responsive Portfolio Website Implementation
 
-### [Component: App Experience]
+- **Hero Section**: Animated gradient background with floating shapes.
+- **Experience Timeline**: Vertical timeline with entrance animations.
+- **Projects**: Hover-zoom cards with glassmorphism.
+- **Skills**: Progress bars that animate when visible (using `visibility_detector`).
+- **Smooth Navigation**: `scrollable_positioned_list` for section-based scrolling.
 
-#### [NEW] [loading_screen.dart](file:///Users/admin/StudioProjects/web_ashi/lib/loading_screen.dart)
-- A simple, animated splash screen that shows before the `HomePage` loads.
+### 4. Global Theming
 
-#### [MODIFY] [main.dart](file:///Users/admin/StudioProjects/web_ashi/lib/main.dart)
-- Integrate the `LoadingScreen`.
-
-### [Component: Web/SEO]
-
-#### [MODIFY] [index.html](file:///Users/admin/StudioProjects/web_ashi/web/index.html)
-- Update `<title>` to "Ashif | Flutter Developer".
-- Update `<meta name="description">` with a professional summary for SEO.
+- **Material 3**: Unified theme data for Light and Dark modes.
+- **Glassmorphism/Neumorphism**: Reusable styling mixins/widgets.
 
 ## Verification Plan
 
 ### Manual Verification
-- Verify "Why Choose Me" section displays correctly on mobile/desktop.
-- Test "Download CV" and social link buttons (ensure they open in new tabs).
-- Check the loading screen animation.
-- View the browser tab title to verify SEO update.
+- Test Android App on Emulator/Device for touch responsiveness and transitions.
+- Test Portfolio Web on Chrome/Safari for responsive breakpoints (Mobile, Tablet, Desktop).
+- Verify smooth scrolling and animation performance across platforms.
