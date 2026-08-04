@@ -39,46 +39,44 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    authDomain: 'YOUR-PROJECT-ID.firebaseapp.com',
-    storageBucket: 'YOUR-PROJECT-ID.appspot.com',
+    apiKey: 'AIzaSyDmsiSYVYHjmB1nXtRSVG3k-MWqxCrIHTA',
+    appId: '1:321786060169:web:d062b86945f877279f5558',
+    messagingSenderId: '321786060169',
+    projectId: 'ashif-web-portfolio',
+    authDomain: 'ashif-web-portfolio.firebaseapp.com',
+    storageBucket: 'ashif-web-portfolio.firebasestorage.app',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    storageBucket: 'YOUR-PROJECT-ID.appspot.com',
+    apiKey: 'AIzaSyAKc0hcyvXVOB10rHEi5TN6yav16dWMjfU',
+    appId: '1:321786060169:android:9ee68733777b7c8e9f5558',
+    messagingSenderId: '321786060169',
+    projectId: 'ashif-web-portfolio',
+    storageBucket: 'ashif-web-portfolio.firebasestorage.app',
   );
-
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    storageBucket: 'YOUR-PROJECT-ID.appspot.com',
+    apiKey: 'AIzaSyBsCEZJW4cygWLblDqvn1LTZhzIhDfYMEM',
+    appId: '1:321786060169:ios:ae35a853bb0c827e9f5558',
+    messagingSenderId: '321786060169',
+    projectId: 'ashif-web-portfolio',
+    storageBucket: 'ashif-web-portfolio.firebasestorage.app',
     iosBundleId: 'com.example.webAshi',
   );
-
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    storageBucket: 'YOUR-PROJECT-ID.appspot.com',
+    apiKey: 'AIzaSyBsCEZJW4cygWLblDqvn1LTZhzIhDfYMEM',
+    appId: '1:321786060169:ios:ae35a853bb0c827e9f5558',
+    messagingSenderId: '321786060169',
+    projectId: 'ashif-web-portfolio',
+    storageBucket: 'ashif-web-portfolio.firebasestorage.app',
     iosBundleId: 'com.example.webAshi',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'YOUR-API-KEY',
-    appId: 'YOUR-APP-ID',
-    messagingSenderId: 'YOUR-SENDER-ID',
-    projectId: 'YOUR-PROJECT-ID',
-    authDomain: 'YOUR-PROJECT-ID.firebaseapp.com',
-    storageBucket: 'YOUR-PROJECT-ID.appspot.com',
+    apiKey: 'AIzaSyDmsiSYVYHjmB1nXtRSVG3k-MWqxCrIHTA',
+    appId: '1:321786060169:web:acfae7ba65c2c9409f5558',
+    messagingSenderId: '321786060169',
+    projectId: 'ashif-web-portfolio',
+    authDomain: 'ashif-web-portfolio.firebaseapp.com',
+    storageBucket: 'ashif-web-portfolio.firebasestorage.app',
   );
 }

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "321786060169",
+    "project_id": "ashif-web-portfolio",
+    "storage_bucket": "ashif-web-portfolio.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321786060169:android:9ee68733777b7c8e9f5558",
+        "android_client_info": {
+          "package_name": "com.example.web_ashi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKc0hcyvXVOB10rHEi5TN6yav16dWMjfU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
