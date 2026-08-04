@@ -42,17 +42,18 @@ class _ContactSectionState extends State<ContactSection> {
       final phone = _phoneController.text;
       final message = _messageController.text;
 
-      // Prepare WhatsApp URL - Using api.whatsapp.com for better web compatibility
+      // Use the standard wa.me format with Uri.encodeComponent for perfect formatting
       final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
-      final url = "https://api.whatsapp.com/send?phone=${AppConstants.whatsappNumber}&text=${Uri.encodeFull(whatsappMessage)}";
+      final url = "https://wa.me/${AppConstants.whatsappNumber}?text=${Uri.encodeComponent(whatsappMessage)}";
 
       try {
-        // OPEN WHATSAPP IMMEDIATELY
-        // Using platformDefault which is more reliable for opening new tabs on web
         final uri = Uri.parse(url);
-        await launchUrl(uri, mode: LaunchMode.platformDefault);
+        
+        // Launch WhatsApp immediately to satisfy browser security requirements
+        // LaunchMode.externalApplication is the most reliable way to open apps/new tabs
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
 
-        // Then save to Firestore in the background
+        // Save to Firestore in the background
         if (Firebase.apps.isNotEmpty) {
           FirestoreService().saveContactMessage(
             name: name,
@@ -65,7 +66,7 @@ class _ContactSectionState extends State<ContactSection> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Redirecting to WhatsApp...'),
+              content: Text('Opening WhatsApp...'),
               backgroundColor: Colors.green,
             ),
           );
@@ -80,7 +81,7 @@ class _ContactSectionState extends State<ContactSection> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Could not open WhatsApp. Please try again.'),
+              content: Text('Could not open WhatsApp ($e). Please try again.'),
               backgroundColor: Colors.red,
             ),
           );
