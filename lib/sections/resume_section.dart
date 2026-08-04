@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -10,9 +11,19 @@ class ResumeSection extends StatelessWidget {
   const ResumeSection({super.key});
 
   void _downloadResume() async {
-    final url = AppConstants.cvUrl;
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    Uri url;
+    if (kIsWeb) {
+      // On web, resolve relative to the current base URL
+      url = Uri.base.resolve(AppConstants.cvUrl);
+    } else {
+      url = Uri.parse(AppConstants.cvUrl);
+    }
+
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url, mode: LaunchMode.externalApplication);
+    } else {
+      // Fallback: try launching without canLaunchUrl check which can be unreliable for some schemes/paths
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }
 
