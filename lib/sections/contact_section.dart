@@ -42,38 +42,34 @@ class _ContactSectionState extends State<ContactSection> {
       final phone = _phoneController.text;
       final message = _messageController.text;
 
-      // Prepare WhatsApp URL
+      // Prepare WhatsApp URL - Using api.whatsapp.com for better web compatibility
       final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
-      final encodedMessage = Uri.encodeComponent(whatsappMessage);
-      final whatsappUrl = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
+      final url = "https://api.whatsapp.com/send?phone=${AppConstants.whatsappNumber}&text=${Uri.encodeFull(whatsappMessage)}";
 
       try {
-        // Attempt to launch WhatsApp first to preserve user gesture context
-        // This prevents browsers from blocking the popup after a long async task
-        final uri = Uri.parse(whatsappUrl);
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        // OPEN WHATSAPP IMMEDIATELY
+        // Using platformDefault which is more reliable for opening new tabs on web
+        final uri = Uri.parse(url);
+        await launchUrl(uri, mode: LaunchMode.platformDefault);
 
-        // Then save to Firestore in the background/simultaneously
+        // Then save to Firestore in the background
         if (Firebase.apps.isNotEmpty) {
-          await FirestoreService().saveContactMessage(
+          FirestoreService().saveContactMessage(
             name: name,
             email: email,
             phone: phone,
             message: message,
-          ).timeout(const Duration(seconds: 5), onTimeout: () {
-            debugPrint("Firestore save timed out, but continuing...");
-          });
+          ).catchError((e) => debugPrint("Firestore background save failed: $e"));
         }
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Message redirected to WhatsApp!'),
+              content: Text('Redirecting to WhatsApp...'),
               backgroundColor: Colors.green,
             ),
           );
           
-          // Clear fields
           _nameController.clear();
           _emailController.clear();
           _phoneController.clear();
@@ -84,7 +80,7 @@ class _ContactSectionState extends State<ContactSection> {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Could not open WhatsApp: $e'),
+              content: Text('Could not open WhatsApp. Please try again.'),
               backgroundColor: Colors.red,
             ),
           );
