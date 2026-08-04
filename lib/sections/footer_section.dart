@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
+import '../utils/constants.dart';
 import '../utils/responsive.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
+
+  void _launchURL(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +25,9 @@ class FooterSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text(
-            "ASHIF",
-            style: TextStyle(
+          Text(
+            AppConstants.name.split(" ")[0].toUpperCase(),
+            style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.w900,
               letterSpacing: 2,
@@ -38,27 +46,24 @@ class FooterSection extends StatelessWidget {
                   runSpacing: 16,
                   alignment: WrapAlignment.center,
                   children: [
-                    _buildFooterLink("GitHub"),
-                    _buildFooterLink("LinkedIn"),
-                    _buildFooterLink("Twitter"),
-                    _buildFooterLink("Instagram"),
+                    _buildFooterLink("GitHub", AppConstants.githubUrl),
+                    _buildFooterLink("LinkedIn", AppConstants.linkedinUrl),
+                    _buildFooterLink("Instagram", AppConstants.instagramUrl),
                   ],
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildFooterLink("GitHub"),
+                    _buildFooterLink("GitHub", AppConstants.githubUrl),
                     const SizedBox(width: 32),
-                    _buildFooterLink("LinkedIn"),
+                    _buildFooterLink("LinkedIn", AppConstants.linkedinUrl),
                     const SizedBox(width: 32),
-                    _buildFooterLink("Twitter"),
-                    const SizedBox(width: 32),
-                    _buildFooterLink("Instagram"),
+                    _buildFooterLink("Instagram", AppConstants.instagramUrl),
                   ],
                 ),
           const SizedBox(height: 40),
           Text(
-            "© ${DateTime.now().year} Ashif. All rights reserved.",
+            "© ${DateTime.now().year} Ashif Saheer. All rights reserved.",
             style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: 8),
@@ -75,9 +80,9 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildFooterLink(String text) {
+  Widget _buildFooterLink(String text, String url) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _launchURL(url),
       child: Text(
         text,
         style: const TextStyle(

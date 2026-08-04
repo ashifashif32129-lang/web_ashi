@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
+import '../utils/constants.dart';
 import '../widgets/glass_card.dart';
 import '../utils/responsive.dart';
 
@@ -14,6 +16,42 @@ class ContactSection extends StatefulWidget {
 
 class _ContactSectionState extends State<ContactSection> {
   final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    _messageController.dispose();
+    super.dispose();
+  }
+
+  void _sendMessage() async {
+    if (_formKey.currentState!.validate()) {
+      final name = _nameController.text;
+      final email = _emailController.text;
+      final phone = _phoneController.text;
+      final message = _messageController.text;
+
+      final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
+      final encodedMessage = Uri.encodeComponent(whatsappMessage);
+      final url = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
+
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      }
+    }
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +111,9 @@ class _ContactSectionState extends State<ContactSection> {
           ),
         ),
         const SizedBox(height: 32),
-        _buildContactInfo(Icons.email_outlined, "Email", "ashifashif32129@gmail.com", isMobile),
+        _buildContactInfo(Icons.email_outlined, "Email", AppConstants.email, isMobile),
         const SizedBox(height: 24),
-        _buildContactInfo(Icons.phone_outlined, "Phone", "+91 7306238617", isMobile),
+        _buildContactInfo(Icons.phone_outlined, "Phone", AppConstants.phone, isMobile),
         const SizedBox(height: 48),
         const Text(
           "Socials",
@@ -84,11 +122,11 @@ class _ContactSectionState extends State<ContactSection> {
         const SizedBox(height: 16),
         Row(
           children: [
-            _buildSocialButton(FontAwesomeIcons.github),
+            _buildSocialButton(FontAwesomeIcons.github, () => _launchURL(AppConstants.githubUrl)),
             const SizedBox(width: 16),
-            _buildSocialButton(FontAwesomeIcons.linkedin),
+            _buildSocialButton(FontAwesomeIcons.linkedin, () => _launchURL(AppConstants.linkedinUrl)),
             const SizedBox(width: 16),
-            _buildSocialButton(FontAwesomeIcons.instagram),
+            _buildSocialButton(FontAwesomeIcons.instagram, () => _launchURL(AppConstants.instagramUrl)),
           ],
         ),
       ],
@@ -102,21 +140,19 @@ class _ContactSectionState extends State<ContactSection> {
         key: _formKey,
         child: Column(
           children: [
-            _buildTextField("Full Name", Icons.person_outline),
+            _buildTextField("Full Name", Icons.person_outline, _nameController),
             const SizedBox(height: 20),
-            _buildTextField("Email Address", Icons.email_outlined),
+            _buildTextField("Email Address", Icons.email_outlined, _emailController),
             const SizedBox(height: 20),
-            _buildTextField("Message", Icons.message_outlined, maxLines: 5),
+            _buildTextField("Phone Number", Icons.phone_outlined, _phoneController),
+            const SizedBox(height: 20),
+            _buildTextField("Message", Icons.message_outlined, _messageController, maxLines: 5),
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Submit
-                  }
-                },
+                onPressed: _sendMessage,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.black,
@@ -158,9 +194,9 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildSocialButton(dynamic icon) {
+  Widget _buildSocialButton(dynamic icon, VoidCallback onPressed) {
     return IconButton(
-      onPressed: () {},
+      onPressed: onPressed,
       icon: FaIcon(icon, color: AppColors.textPrimary, size: 24),
       style: IconButton.styleFrom(
         backgroundColor: AppColors.border.withValues(alpha: 0.3),
@@ -169,8 +205,9 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildTextField(String label, IconData icon, {int maxLines = 1}) {
+  Widget _buildTextField(String label, IconData icon, TextEditingController controller, {int maxLines = 1}) {
     return TextFormField(
+      controller: controller,
       maxLines: maxLines,
       decoration: InputDecoration(
         labelText: label,

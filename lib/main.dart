@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'constants/app_theme.dart';
 import 'loading_screen.dart';
+import 'utils/constants.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       valueListenable: themeNotifier,
       builder: (context, mode, child) {
         return MaterialApp(
-          title: 'ASHIF | Flutter Developer',
+          title: '${AppConstants.name} | ${AppConstants.role}',
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

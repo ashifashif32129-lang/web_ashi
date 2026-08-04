@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import '../constants/app_colors.dart';
+import '../utils/constants.dart';
 import '../utils/responsive.dart';
 
 class HeroSection extends StatelessWidget {
@@ -23,7 +24,7 @@ class HeroSection extends StatelessWidget {
         children: [
           // Name with reveal animation
           Text(
-            "ASHIF",
+            AppConstants.name,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: isMobile ? 50 : (isTablet ? 70 : 100),

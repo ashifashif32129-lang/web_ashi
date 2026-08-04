@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../constants/app_colors.dart';
+import '../utils/constants.dart';
 import '../utils/responsive.dart';
 import '../widgets/aurora_background.dart';
 import '../widgets/glass_card.dart';
@@ -118,14 +119,14 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  "ASHIF",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 18,
-                    letterSpacing: 1,
-                  ),
+                Text(
+                AppConstants.name.split(" ")[0].toUpperCase(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 18,
+                  letterSpacing: 1,
                 ),
+              ),
                 const SizedBox(width: 32),
                 ...List.generate(_sections.length, (index) {
                   return Padding(
@@ -156,11 +157,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       backgroundColor: AppColors.background,
       child: Column(
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             child: Center(
               child: Text(
-                "ASHIF",
-                style: TextStyle(
+                AppConstants.name.split(" ")[0].toUpperCase(),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 24,
                   fontWeight: FontWeight.w900,

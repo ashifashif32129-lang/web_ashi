@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
+import '../utils/constants.dart';
 import '../widgets/glass_card.dart';
 import '../utils/responsive.dart';
 
 class ResumeSection extends StatelessWidget {
   const ResumeSection({super.key});
+
+  void _downloadResume() async {
+    final url = AppConstants.cvUrl;
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,11 +39,11 @@ class ResumeSection extends StatelessWidget {
                 
                 const SizedBox(height: 32),
                 
-                Text(
+                const Text(
                   "Interested in my work?",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: isMobile ? 24 : 32,
+                    fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -56,7 +65,7 @@ class ResumeSection extends StatelessWidget {
                 SizedBox(
                   width: isMobile ? double.infinity : null,
                   child: ElevatedButton.icon(
-                    onPressed: () {},
+                    onPressed: _downloadResume,
                     icon: const Icon(Icons.download_rounded),
                     label: const Text("DOWNLOAD RESUME"),
                     style: ElevatedButton.styleFrom(

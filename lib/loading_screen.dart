@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'screens/portfolio_screen.dart';
 import 'constants/app_colors.dart';
+import 'utils/constants.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
@@ -63,9 +64,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
             const SizedBox(height: 48),
             
             // Text reveal
-            const Text(
-              "ASHIF",
-              style: TextStyle(
+            Text(
+              AppConstants.name.split(" ")[0].toUpperCase(),
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w900,
                 letterSpacing: 8,

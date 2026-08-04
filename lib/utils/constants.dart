@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String name = "ASHIF";
+  static const String name = "Ashif Saheer";
   static const String role = "Flutter Developer";
   static const String heroTitle = "I build modern, responsive, and high-performance Flutter applications with clean UI, smooth animations, and Firebase integration.";
   
@@ -37,8 +37,11 @@ class AppConstants {
     {"title": "Professional UI", "icon": "palette"},
   ];
 
-  static const String githubUrl = "https://github.com/ashif";
-  static const String linkedinUrl = "https://linkedin.com/in/ashif";
-  static const String instagramUrl = "https://instagram.com/ashif";
-  static const String cvUrl = "#"; // Replace with actual URL
+  static const String email = "ashifashif32129@gmail.com";
+  static const String phone = "+91 7306238617";
+  static const String whatsappNumber = "917306238617";
+  static const String githubUrl = "https://github.com/ashifashif32129-lang";
+  static const String linkedinUrl = "https://linkedin.com/in/ashifsaheer";
+  static const String instagramUrl = "https://www.instagram.com/appverse__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
+  static const String cvUrl = "assets/resume.pdf";
 }
