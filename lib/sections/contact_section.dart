@@ -42,24 +42,33 @@ class _ContactSectionState extends State<ContactSection> {
       final phone = _phoneController.text;
       final message = _messageController.text;
 
-      try {
-        // Check if Firebase is initialized before calling service
-        if (Firebase.apps.isEmpty) {
-          throw Exception("Firebase is not initialized. Please configure your Firebase project.");
-        }
+      // Prepare WhatsApp URL
+      final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
+      final encodedMessage = Uri.encodeComponent(whatsappMessage);
+      final whatsappUrl = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
 
-        // Save to Firestore
-        await FirestoreService().saveContactMessage(
-          name: name,
-          email: email,
-          phone: phone,
-          message: message,
-        );
+      try {
+        // Attempt to launch WhatsApp first to preserve user gesture context
+        // This prevents browsers from blocking the popup after a long async task
+        final uri = Uri.parse(whatsappUrl);
+        await launchUrl(uri, mode: LaunchMode.externalApplication);
+
+        // Then save to Firestore in the background/simultaneously
+        if (Firebase.apps.isNotEmpty) {
+          await FirestoreService().saveContactMessage(
+            name: name,
+            email: email,
+            phone: phone,
+            message: message,
+          ).timeout(const Duration(seconds: 5), onTimeout: () {
+            debugPrint("Firestore save timed out, but continuing...");
+          });
+        }
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Message sent successfully!'),
+              content: Text('Message redirected to WhatsApp!'),
               backgroundColor: Colors.green,
             ),
           );
@@ -70,20 +79,12 @@ class _ContactSectionState extends State<ContactSection> {
           _phoneController.clear();
           _messageController.clear();
         }
-
-        // Also open WhatsApp as per previous requirements
-        final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
-        final encodedMessage = Uri.encodeComponent(whatsappMessage);
-        final url = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
-
-        if (await canLaunchUrl(Uri.parse(url))) {
-          await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
-        }
       } catch (e) {
+        debugPrint("Error in submit: $e");
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Failed to send message: $e'),
+              content: Text('Could not open WhatsApp: $e'),
               backgroundColor: Colors.red,
             ),
           );
