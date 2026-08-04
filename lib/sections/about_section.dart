@@ -54,11 +54,11 @@ class AboutSection extends StatelessWidget {
                         flex: 1,
                         child: Column(
                           children: [
-                            _buildStat(5, "Years of Experience", suffix: "+"),
+                            _buildStat(1, "Years of Experience", suffix: "+"),
                             const SizedBox(height: 16),
-                            _buildStat(50, "Projects Completed", suffix: "+"),
+                            _buildStat(10, "Projects Completed", suffix: "+"),
                             const SizedBox(height: 16),
-                            _buildStat(10, "Global Clients", suffix: "+"),
+                            _buildStat(1, "Global Clients", suffix: "+"),
                           ],
                         ),
                       ),
