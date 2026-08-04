@@ -1,6 +1,6 @@
 class AppConstants {
-  static const String name = "Ashif Saheer";
-  static const String role = "Flutter Developer";
+  static const String name = "Ashif ";
+  static const String role = "Flutter Developer | Git & GitHub";
   static const String heroTitle = "I build modern, responsive, and high-performance Flutter applications with clean UI, smooth animations, and Firebase integration.";
   
   static const List<String> skills = [
