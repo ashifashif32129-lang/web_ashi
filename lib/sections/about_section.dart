@@ -36,13 +36,13 @@ class AboutSection extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Expanded(child: _buildStat(5, "Years of Experience", suffix: "+")),
+                          Expanded(child: _buildStat(1, "Years of Experience", suffix: "+")),
                           const SizedBox(width: 16),
-                          Expanded(child: _buildStat(50, "Projects Completed", suffix: "+")),
+                          Expanded(child: _buildStat(10, "Projects Completed", suffix: "+")),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _buildStat(10, "Global Clients", suffix: "+"),
+                      _buildStat(1, "Global Clients", suffix: "+"),
                       const SizedBox(height: 40),
                       _buildDescription(isMobile),
                     ],
