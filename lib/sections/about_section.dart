@@ -36,13 +36,13 @@ class AboutSection extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Expanded(child: _buildStat("Flutter", "Developer")),
+                          Expanded(child: _buildStat(1, "Years Experience", suffix: "+")),
                           const SizedBox(width: 16),
                           Expanded(child: _buildStat(5, "Flutter Projects", suffix: "+")),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _buildStat("India", "Based in"),
+                      _buildStat(2, "Clients", suffix: "+"),
                       const SizedBox(height: 40),
                       _buildDescription(isMobile),
                     ],
@@ -54,11 +54,11 @@ class AboutSection extends StatelessWidget {
                         flex: 1,
                         child: Column(
                           children: [
-                            _buildStat("Flutter", "Developer"),
+                            _buildStat(1, "Years Experience", suffix: "+"),
                             const SizedBox(height: 16),
                             _buildStat(5, "Flutter Projects", suffix: "+"),
                             const SizedBox(height: 16),
-                            _buildStat("India", "Based in"),
+                            _buildStat(2, "Clients", suffix: "+"),
                           ],
                         ),
                       ),
