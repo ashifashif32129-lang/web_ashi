@@ -11,18 +11,10 @@ class ResumeSection extends StatelessWidget {
   const ResumeSection({super.key});
 
   void _downloadResume() async {
-    Uri url;
-    if (kIsWeb) {
-      // On web, resolve relative to the current base URL
-      url = Uri.base.resolve(AppConstants.cvUrl);
-    } else {
-      url = Uri.parse(AppConstants.cvUrl);
-    }
-
+    final url = Uri.parse(AppConstants.cvUrl);
     if (await canLaunchUrl(url)) {
       await launchUrl(url, mode: LaunchMode.externalApplication);
     } else {
-      // Fallback: try launching without canLaunchUrl check which can be unreliable for some schemes/paths
       await launchUrl(url, mode: LaunchMode.externalApplication);
     }
   }

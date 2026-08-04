@@ -43,5 +43,5 @@ class AppConstants {
   static const String githubUrl = "https://github.com/ashifashif32129-lang";
   static const String linkedinUrl = "https://linkedin.com/in/ashifsaheer";
   static const String instagramUrl = "https://www.instagram.com/appverse__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==";
-  static const String cvUrl = "resume.pdf";
+  static const String cvUrl = "https://ashifashif32129-lang.github.io/web_ashi/resume.pdf";
 }
