@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -42,6 +43,11 @@ class _ContactSectionState extends State<ContactSection> {
       final message = _messageController.text;
 
       try {
+        // Check if Firebase is initialized before calling service
+        if (Firebase.apps.isEmpty) {
+          throw Exception("Firebase is not initialized. Please configure your Firebase project.");
+        }
+
         // Save to Firestore
         await FirestoreService().saveContactMessage(
           name: name,
