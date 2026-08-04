@@ -130,9 +130,15 @@ class _ContactSectionState extends State<ContactSection> {
                 : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(flex: 2, child: _buildInfoSide(isMobile)),
+                      Expanded(
+                        flex: 2,
+                        child: _buildInfoSide(isMobile),
+                      ),
                       const SizedBox(width: 60),
-                      Expanded(flex: 3, child: _buildFormSide(isMobile)),
+                      Expanded(
+                        flex: 3,
+                        child: _buildFormSide(isMobile),
+                      ),
                     ],
                   ),
           ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.1),

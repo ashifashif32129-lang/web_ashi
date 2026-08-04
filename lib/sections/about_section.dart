@@ -51,78 +51,89 @@ class AboutSection extends StatelessWidget {
           // Content Area
           Container(
             constraints: const BoxConstraints(maxWidth: 1100),
-            child: Flex(
-              direction: isMobile ? Axis.vertical : Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Left Side: Abstract Graphic + Description
-                Expanded(
-                  flex: isMobile ? 0 : 5,
-                  child: Column(
+            child: isMobile
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildAbstractGraphic(isMobile),
-                      const SizedBox(height: 40),
-                      Text(
-                        "I am a passionate Flutter Developer dedicated to crafting high-performance, beautiful mobile and web applications.",
-                        style: TextStyle(
-                          fontSize: isMobile ? 20 : 26,
-                          fontWeight: FontWeight.bold,
-                          height: 1.4,
-                          color: AppColors.textPrimary,
-                        ),
-                      ).animate().fadeIn(delay: 400.ms),
-                      const SizedBox(height: 24),
-                      Text(
-                        "With deep expertise in Flutter and Dart, I focus on writing clean, maintainable code and building responsive user interfaces that deliver exceptional user experiences.\n\n"
-                        "My approach combines technical excellence with a keen eye for design, ensuring that every project not only works perfectly but also looks premium and modern.",
-                        style: TextStyle(
-                          fontSize: isMobile ? 16 : 18,
-                          color: AppColors.textSecondary,
-                          height: 1.8,
-                          letterSpacing: 0.5,
-                        ),
-                      ).animate().fadeIn(delay: 600.ms),
+                      _buildLeftContent(isMobile, isTablet),
+                      const SizedBox(height: 60),
+                      _buildRightContent(isMobile),
                     ],
-                  ),
-                ),
-
-                if (!isMobile) SizedBox(width: isTablet ? 40 : 100),
-                if (isMobile) const SizedBox(height: 60),
-
-                // Right Side: Statistics Grid
-                Expanded(
-                  flex: isMobile ? 0 : 4,
-                  child: Column(
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _AboutStatCard(
-                        value: 1,
-                        label: "Years Experience",
-                        suffix: "+",
-                        delay: 800.ms,
+                      Expanded(
+                        flex: 5,
+                        child: _buildLeftContent(isMobile, isTablet),
                       ),
-                      const SizedBox(height: 24),
-                      _AboutStatCard(
-                        value: 5,
-                        label: "Flutter Projects",
-                        suffix: "+",
-                        delay: 1000.ms,
-                      ),
-                      const SizedBox(height: 24),
-                      _AboutStatCard(
-                        value: 2,
-                        label: "Clients",
-                        suffix: "+",
-                        delay: 1200.ms,
+                      SizedBox(width: isTablet ? 40 : 100),
+                      Expanded(
+                        flex: 4,
+                        child: _buildRightContent(isMobile),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLeftContent(bool isMobile, bool isTablet) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildAbstractGraphic(isMobile),
+        const SizedBox(height: 40),
+        Text(
+          "I am a passionate Flutter Developer dedicated to crafting high-performance, beautiful mobile and web applications.",
+          style: TextStyle(
+            fontSize: isMobile ? 20 : 26,
+            fontWeight: FontWeight.bold,
+            height: 1.4,
+            color: AppColors.textPrimary,
+          ),
+        ).animate().fadeIn(delay: 400.ms),
+        const SizedBox(height: 24),
+        Text(
+          "With deep expertise in Flutter and Dart, I focus on writing clean, maintainable code and building responsive user interfaces that deliver exceptional user experiences.\n\n"
+          "My approach combines technical excellence with a keen eye for design, ensuring that every project not only works perfectly but also looks premium and modern.",
+          style: TextStyle(
+            fontSize: isMobile ? 16 : 18,
+            color: AppColors.textSecondary,
+            height: 1.8,
+            letterSpacing: 0.5,
+          ),
+        ).animate().fadeIn(delay: 600.ms),
+      ],
+    );
+  }
+
+  Widget _buildRightContent(bool isMobile) {
+    return Column(
+      children: [
+        _AboutStatCard(
+          value: 1,
+          label: "Years Experience",
+          suffix: "+",
+          delay: 800.ms,
+        ),
+        const SizedBox(height: 24),
+        _AboutStatCard(
+          value: 5,
+          label: "Flutter Projects",
+          suffix: "+",
+          delay: 1000.ms,
+        ),
+        const SizedBox(height: 24),
+        _AboutStatCard(
+          value: 2,
+          label: "Clients",
+          suffix: "+",
+          delay: 1200.ms,
+        ),
+      ],
     );
   }
 
