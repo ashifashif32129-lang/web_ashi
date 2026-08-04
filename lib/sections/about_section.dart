@@ -36,13 +36,13 @@ class AboutSection extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Expanded(child: _buildStat(1, "Years of Experience", suffix: "+")),
+                          Expanded(child: _buildStat("Flutter", "Developer")),
                           const SizedBox(width: 16),
-                          Expanded(child: _buildStat(10, "Projects Completed", suffix: "+")),
+                          Expanded(child: _buildStat(5, "Flutter Projects", suffix: "+")),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      _buildStat(1, "Global Clients", suffix: "+"),
+                      _buildStat("India", "Based in"),
                       const SizedBox(height: 40),
                       _buildDescription(isMobile),
                     ],
@@ -54,11 +54,11 @@ class AboutSection extends StatelessWidget {
                         flex: 1,
                         child: Column(
                           children: [
-                            _buildStat(1, "Years of Experience", suffix: "+"),
+                            _buildStat("Flutter", "Developer"),
                             const SizedBox(height: 16),
-                            _buildStat(10, "Projects Completed", suffix: "+"),
+                            _buildStat(5, "Flutter Projects", suffix: "+"),
                             const SizedBox(height: 16),
-                            _buildStat(1, "Global Clients", suffix: "+"),
+                            _buildStat("India", "Based in"),
                           ],
                         ),
                       ),
@@ -104,20 +104,29 @@ class AboutSection extends StatelessWidget {
     );
   }
 
-  Widget _buildStat(int value, String label, {String suffix = ""}) {
+  Widget _buildStat(dynamic value, String label, {String suffix = ""}) {
     return GlassCard(
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: Column(
         children: [
-          AnimatedCounter(
-            targetValue: value,
-            suffix: suffix,
-            style: const TextStyle(
-              fontSize: 36,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primary,
-            ),
-          ),
+          value is int
+              ? AnimatedCounter(
+                  targetValue: value,
+                  suffix: suffix,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                )
+              : Text(
+                  value.toString(),
+                  style: const TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primary,
+                  ),
+                ),
           const SizedBox(height: 4),
           Text(
             label,
