@@ -63,7 +63,7 @@ class FooterSection extends StatelessWidget {
                 ),
           const SizedBox(height: 40),
           Text(
-            "© ${DateTime.now().year} Ashif Saheer. All rights reserved.",
+            "© ${DateTime.now().year} Ashif . All rights reserved.",
             style: const TextStyle(color: AppColors.textSecondary, fontSize: 12),
           ),
           const SizedBox(height: 8),

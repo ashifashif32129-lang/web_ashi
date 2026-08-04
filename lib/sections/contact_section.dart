@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../constants/app_colors.dart';
 import '../utils/constants.dart';
+import '../firebase/firestore_service.dart';
 import '../widgets/glass_card.dart';
 import '../utils/responsive.dart';
 
@@ -20,6 +21,7 @@ class _ContactSectionState extends State<ContactSection> {
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
   final _messageController = TextEditingController();
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -30,19 +32,60 @@ class _ContactSectionState extends State<ContactSection> {
     super.dispose();
   }
 
-  void _sendMessage() async {
+  void _handleSubmit() async {
     if (_formKey.currentState!.validate()) {
+      setState(() => _isLoading = true);
+      
       final name = _nameController.text;
       final email = _emailController.text;
       final phone = _phoneController.text;
       final message = _messageController.text;
 
-      final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
-      final encodedMessage = Uri.encodeComponent(whatsappMessage);
-      final url = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
+      try {
+        // Save to Firestore
+        await FirestoreService().saveContactMessage(
+          name: name,
+          email: email,
+          phone: phone,
+          message: message,
+        );
 
-      if (await canLaunchUrl(Uri.parse(url))) {
-        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Message sent successfully!'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          
+          // Clear fields
+          _nameController.clear();
+          _emailController.clear();
+          _phoneController.clear();
+          _messageController.clear();
+        }
+
+        // Also open WhatsApp as per previous requirements
+        final whatsappMessage = "Name: $name\nEmail: $email\nPhone: $phone\nMessage:\n$message";
+        final encodedMessage = Uri.encodeComponent(whatsappMessage);
+        final url = "https://wa.me/${AppConstants.whatsappNumber}?text=$encodedMessage";
+
+        if (await canLaunchUrl(Uri.parse(url))) {
+          await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+        }
+      } catch (e) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Failed to send message: $e'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      } finally {
+        if (mounted) {
+          setState(() => _isLoading = false);
+        }
       }
     }
   }
@@ -152,17 +195,26 @@ class _ContactSectionState extends State<ContactSection> {
               width: double.infinity,
               height: 60,
               child: ElevatedButton(
-                onPressed: _sendMessage,
+                onPressed: _isLoading ? null : _handleSubmit,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.black,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   elevation: 0,
                 ),
-                child: const Text(
-                  "SEND MESSAGE",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
+                child: _isLoading
+                    ? const SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.black,
+                        ),
+                      )
+                    : const Text(
+                        "SEND MESSAGE",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      ),
               ),
             ),
           ],

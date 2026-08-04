@@ -9,8 +9,8 @@ class ExperienceSection extends StatelessWidget {
 
   final List<Map<String, String>> _experience = const [
     {
-      "date": "2023 - Present",
-      "role": "Senior Flutter Developer",
+      "date": "2025 - Present",
+      "role": " Flutter Developer",
       "company": "Tech Solutions Inc.",
       "desc": "Leading a team of developers to build high-scale fintech applications for international clients.",
     },

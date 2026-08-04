@@ -6,14 +6,16 @@ class FirestoreService {
   Future<void> saveContactMessage({
     required String name,
     required String email,
+    required String phone,
     required String message,
   }) async {
     try {
-      await _db.collection('contacts').add({
+      await _db.collection('contact_messages').add({
         'name': name,
         'email': email,
+        'phone': phone,
         'message': message,
-        'timestamp': FieldValue.serverTimestamp(),
+        'submittedAt': FieldValue.serverTimestamp(),
       });
     } catch (e) {
       rethrow;
