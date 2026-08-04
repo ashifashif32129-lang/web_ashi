@@ -61,83 +61,82 @@ class ExperienceSection extends StatelessWidget {
   }
 
   Widget _buildTimelineItem(String date, String role, String company, String desc, bool isMobile) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Container(
-                width: isMobile ? 12 : 16,
-                height: isMobile ? 12 : 16,
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.5),
-                      blurRadius: 10,
-                    ),
-                  ],
-                ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: isMobile ? 12 : 16,
+              height: isMobile ? 12 : 16,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.primary.withValues(alpha: 0.5),
+                    blurRadius: 10,
+                  ),
+                ],
               ),
-              Expanded(
-                child: Container(
-                  width: 2,
-                  color: AppColors.border,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(width: isMobile ? 16 : 32),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: isMobile ? 30 : 50),
-              child: GlassCard(
-                padding: EdgeInsets.all(isMobile ? 16 : 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      date,
-                      style: TextStyle(
-                        color: AppColors.primary,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1,
-                        fontSize: isMobile ? 12 : 14,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      role,
-                      style: TextStyle(
-                        fontSize: isMobile ? 18 : 24,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      company,
-                      style: TextStyle(
-                        fontSize: isMobile ? 14 : 18,
-                        color: AppColors.textSecondary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    Text(
-                      desc,
-                      style: TextStyle(
-                        fontSize: isMobile ? 14 : 16,
-                        color: AppColors.textSecondary,
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate().fadeIn().slideX(begin: 0.1),
             ),
+            Container(
+              width: 2,
+              height: isMobile ? 180 : 200, // Fixed height instead of Expanded in IntrinsicHeight
+              color: AppColors.border.withValues(alpha: 0.3),
+            ),
+          ],
+        ),
+        SizedBox(width: isMobile ? 16 : 32),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.only(bottom: isMobile ? 30 : 50),
+            child: GlassCard(
+              padding: EdgeInsets.all(isMobile ? 16 : 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    date,
+                    style: TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                      fontSize: isMobile ? 12 : 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    role,
+                    style: TextStyle(
+                      fontSize: isMobile ? 18 : 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    company,
+                    style: TextStyle(
+                      fontSize: isMobile ? 14 : 18,
+                      color: AppColors.textSecondary,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    desc,
+                    style: TextStyle(
+                      fontSize: isMobile ? 14 : 16,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
+                  ),
+                ],
+              ),
+            ).animate().fadeIn().slideX(begin: 0.1),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -37,94 +37,100 @@ class _ContactSectionState extends State<ContactSection> {
           
           Container(
             constraints: const BoxConstraints(maxWidth: 1000),
-            child: Flex(
-              direction: (isMobile || isTablet) ? Axis.vertical : Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Info Side
-                Flexible(
-                  flex: (isMobile || isTablet) ? 0 : 2,
-                  child: Column(
+            child: (isMobile || isTablet)
+                ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Let's build something extraordinary together.",
-                        style: TextStyle(
-                          fontSize: isMobile ? 24 : 28,
-                          fontWeight: FontWeight.bold,
-                          height: 1.3,
-                        ),
-                      ),
-                      const SizedBox(height: 32),
-                      _buildContactInfo(Icons.email_outlined, "Email", "ashifashif32129@gmail.com", isMobile),
-                      const SizedBox(height: 24),
-                      _buildContactInfo(Icons.phone_outlined, "Phone", "+91 7306238617", isMobile),
-                      const SizedBox(height: 48),
-                      const Text(
-                        "Socials",
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          _buildSocialButton(FontAwesomeIcons.github),
-                          const SizedBox(width: 16),
-                          _buildSocialButton(FontAwesomeIcons.linkedin),
-                          const SizedBox(width: 16),
-                          _buildSocialButton(FontAwesomeIcons.instagram),
-                        ],
-                      ),
+                      _buildInfoSide(isMobile),
+                      const SizedBox(height: 60),
+                      _buildFormSide(isMobile),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(flex: 2, child: _buildInfoSide(isMobile)),
+                      const SizedBox(width: 60),
+                      Expanded(flex: 3, child: _buildFormSide(isMobile)),
                     ],
                   ),
-                ),
-                
-                SizedBox(width: (isMobile || isTablet) ? 0 : 60, height: (isMobile || isTablet) ? 60 : 0),
-                
-                // Form Side
-                Flexible(
-                  flex: (isMobile || isTablet) ? 0 : 3,
-                  child: GlassCard(
-                    padding: EdgeInsets.all(isMobile ? 20 : 32),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          _buildTextField("Full Name", Icons.person_outline),
-                          const SizedBox(height: 20),
-                          _buildTextField("Email Address", Icons.email_outlined),
-                          const SizedBox(height: 20),
-                          _buildTextField("Message", Icons.message_outlined, maxLines: 5),
-                          const SizedBox(height: 32),
-                          SizedBox(
-                            width: double.infinity,
-                            height: 60,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  // Submit
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primary,
-                                foregroundColor: Colors.black,
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                elevation: 0,
-                              ),
-                              child: const Text(
-                                "SEND MESSAGE",
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ).animate().fadeIn(delay: 400.ms).slideY(begin: 0.1),
         ],
+      ),
+    );
+  }
+
+  Widget _buildInfoSide(bool isMobile) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "Let's build something extraordinary together.",
+          style: TextStyle(
+            fontSize: isMobile ? 24 : 28,
+            fontWeight: FontWeight.bold,
+            height: 1.3,
+          ),
+        ),
+        const SizedBox(height: 32),
+        _buildContactInfo(Icons.email_outlined, "Email", "ashifashif32129@gmail.com", isMobile),
+        const SizedBox(height: 24),
+        _buildContactInfo(Icons.phone_outlined, "Phone", "+91 7306238617", isMobile),
+        const SizedBox(height: 48),
+        const Text(
+          "Socials",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            _buildSocialButton(FontAwesomeIcons.github),
+            const SizedBox(width: 16),
+            _buildSocialButton(FontAwesomeIcons.linkedin),
+            const SizedBox(width: 16),
+            _buildSocialButton(FontAwesomeIcons.instagram),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFormSide(bool isMobile) {
+    return GlassCard(
+      padding: EdgeInsets.all(isMobile ? 20 : 32),
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            _buildTextField("Full Name", Icons.person_outline),
+            const SizedBox(height: 20),
+            _buildTextField("Email Address", Icons.email_outlined),
+            const SizedBox(height: 20),
+            _buildTextField("Message", Icons.message_outlined, maxLines: 5),
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              height: 60,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    // Submit
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: Colors.black,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  "SEND MESSAGE",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

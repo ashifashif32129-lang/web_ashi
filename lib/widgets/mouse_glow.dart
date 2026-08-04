@@ -12,37 +12,44 @@ class MouseGlow extends StatefulWidget {
 }
 
 class _MouseGlowState extends State<MouseGlow> {
-  Offset _mousePosition = Offset.zero;
+  final ValueNotifier<Offset> _mousePosition = ValueNotifier(Offset.zero);
+
+  @override
+  void dispose() {
+    _mousePosition.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     if (Responsive.isMobile(context)) return widget.child;
 
     return MouseRegion(
-      onHover: (event) {
-        setState(() {
-          _mousePosition = event.localPosition;
-        });
-      },
+      onHover: (event) => _mousePosition.value = event.localPosition,
       child: Stack(
         children: [
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 100),
-            left: _mousePosition.dx - 200,
-            top: _mousePosition.dy - 200,
-            child: Container(
-              width: 400,
-              height: 400,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: RadialGradient(
-                  colors: [
-                    AppColors.primary.withValues(alpha: 0.15),
-                    Colors.transparent,
-                  ],
+          ValueListenableBuilder<Offset>(
+            valueListenable: _mousePosition,
+            builder: (context, position, _) {
+              return AnimatedPositioned(
+                duration: const Duration(milliseconds: 50),
+                left: position.dx - 200,
+                top: position.dy - 200,
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: RadialGradient(
+                      colors: [
+                        AppColors.primary.withValues(alpha: 0.1),
+                        Colors.transparent,
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
           widget.child,
         ],

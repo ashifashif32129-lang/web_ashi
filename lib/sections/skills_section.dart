@@ -95,26 +95,28 @@ class _SkillsSectionState extends State<SkillsSection> {
             color: AppColors.border.withValues(alpha: 0.3),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: AnimatedContainer(
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeOutCubic,
-            width: _isVisible ? double.infinity : 0,
-            alignment: Alignment.centerLeft,
-            child: FractionallySizedBox(
-              widthFactor: _isVisible ? level : 0,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(4),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.primary.withValues(alpha: 0.3),
-                      blurRadius: 10,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return Stack(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(seconds: 1),
+                    curve: Curves.easeOutCubic,
+                    width: _isVisible ? constraints.maxWidth * level : 0,
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          blurRadius: 10,
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ],

@@ -30,67 +30,77 @@ class AboutSection extends StatelessWidget {
           
           Container(
             constraints: const BoxConstraints(maxWidth: 1000),
-            child: Flex(
-              direction: isMobile ? Axis.vertical : Axis.horizontal,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Experience Stats
-                Flexible(
-                  flex: isMobile ? 0 : 1,
-                  child: Column(
+            child: isMobile
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
                           Expanded(child: _buildStat(5, "Years of Experience", suffix: "+")),
-                          if (isMobile) const SizedBox(width: 16),
-                          if (isMobile) Expanded(child: _buildStat(50, "Projects Completed", suffix: "+")),
+                          const SizedBox(width: 16),
+                          Expanded(child: _buildStat(50, "Projects Completed", suffix: "+")),
                         ],
                       ),
                       const SizedBox(height: 16),
-                      if (!isMobile) _buildStat(50, "Projects Completed", suffix: "+"),
-                      if (!isMobile) const SizedBox(height: 16),
                       _buildStat(10, "Global Clients", suffix: "+"),
+                      const SizedBox(height: 40),
+                      _buildDescription(isMobile),
                     ],
-                  ),
-                ),
-                
-                SizedBox(width: isMobile ? 0 : (isTablet ? 40 : 80), height: isMobile ? 40 : 0),
-                
-                // Description
-                Flexible(
-                  flex: 2,
-                  child: Column(
+                  )
+                : Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "I am a passionate Flutter Developer dedicated to crafting high-performance, beautiful mobile and web applications.",
-                        style: TextStyle(
-                          fontSize: isMobile ? 20 : 24,
-                          fontWeight: FontWeight.bold,
-                          height: 1.4,
+                      Expanded(
+                        flex: 1,
+                        child: Column(
+                          children: [
+                            _buildStat(5, "Years of Experience", suffix: "+"),
+                            const SizedBox(height: 16),
+                            _buildStat(50, "Projects Completed", suffix: "+"),
+                            const SizedBox(height: 16),
+                            _buildStat(10, "Global Clients", suffix: "+"),
+                          ],
                         ),
                       ),
-                      const SizedBox(height: 24),
-                      Text(
-                        "With deep expertise in Flutter and Dart, I focus on writing clean, maintainable code and building responsive user interfaces that deliver exceptional user experiences.\n\n"
-                        "My approach combines technical excellence with a keen eye for design, ensuring that every project not only works perfectly but also looks premium and modern.",
-                        style: TextStyle(
-                          fontSize: isMobile ? 16 : 18,
-                          color: AppColors.textSecondary,
-                          height: 1.6,
-                        ),
+                      SizedBox(width: isTablet ? 40 : 80),
+                      Expanded(
+                        flex: 2,
+                        child: _buildDescription(isMobile),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
           ).animate().fadeIn(delay: 400.ms).slide(
                 begin: Offset(isMobile ? 0 : -0.1, isMobile ? 0.1 : 0),
                 duration: 600.ms,
               ),
         ],
       ),
+    );
+  }
+
+  Widget _buildDescription(bool isMobile) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "I am a passionate Flutter Developer dedicated to crafting high-performance, beautiful mobile and web applications.",
+          style: TextStyle(
+            fontSize: isMobile ? 20 : 24,
+            fontWeight: FontWeight.bold,
+            height: 1.4,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Text(
+          "With deep expertise in Flutter and Dart, I focus on writing clean, maintainable code and building responsive user interfaces that deliver exceptional user experiences.\n\n"
+          "My approach combines technical excellence with a keen eye for design, ensuring that every project not only works perfectly but also looks premium and modern.",
+          style: TextStyle(
+            fontSize: isMobile ? 16 : 18,
+            color: AppColors.textSecondary,
+            height: 1.6,
+          ),
+        ),
+      ],
     );
   }
 

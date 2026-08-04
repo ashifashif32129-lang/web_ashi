@@ -107,41 +107,44 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   Widget _buildNavBar() {
     return Positioned(
       top: 32,
-      left: 0,
-      right: 0,
+      left: 20,
+      right: 20,
       child: Center(
         child: GlassCard(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
           borderRadius: 100,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                "ASHIF",
-                style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 18,
-                  letterSpacing: 1,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  "ASHIF",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18,
+                    letterSpacing: 1,
+                  ),
                 ),
-              ),
-              const SizedBox(width: 48),
-              ...List.generate(_sections.length, (index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: InkWell(
-                    onTap: () => _scrollTo(index),
-                    child: Text(
-                      _sections[index],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textSecondary,
+                const SizedBox(width: 32),
+                ...List.generate(_sections.length, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: InkWell(
+                      onTap: () => _scrollTo(index),
+                      child: Text(
+                        _sections[index],
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              }),
-            ],
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),
