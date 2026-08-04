@@ -94,7 +94,11 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   Widget _buildSection(int index) {
     switch (index) {
-      case 0: return HeroSection(onContactPressed: () => _scrollTo(6));
+      case 0:
+        return HeroSection(
+          onContactPressed: () => _scrollTo(6),
+          onProjectsPressed: () => _scrollTo(3),
+        );
       case 1: return const AboutSection();
       case 2: return const SkillsSection();
       case 3: return const ProjectsSection();

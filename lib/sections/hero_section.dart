@@ -7,8 +7,13 @@ import '../utils/responsive.dart';
 
 class HeroSection extends StatelessWidget {
   final VoidCallback onContactPressed;
+  final VoidCallback onProjectsPressed;
 
-  const HeroSection({super.key, required this.onContactPressed});
+  const HeroSection({
+    super.key,
+    required this.onContactPressed,
+    required this.onProjectsPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +84,7 @@ class HeroSection extends StatelessWidget {
           isMobile
               ? Column(
                   children: [
-                    _buildPrimaryButton("View Projects", () {}, fullWidth: true),
+                    _buildPrimaryButton("View Projects", onProjectsPressed, fullWidth: true),
                     const SizedBox(height: 16),
                     _buildSecondaryButton("Contact Me", onContactPressed, fullWidth: true),
                   ],
@@ -87,7 +92,7 @@ class HeroSection extends StatelessWidget {
               : Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildPrimaryButton("View Projects", () {}),
+                    _buildPrimaryButton("View Projects", onProjectsPressed),
                     const SizedBox(width: 20),
                     _buildSecondaryButton("Contact Me", onContactPressed),
                   ],
