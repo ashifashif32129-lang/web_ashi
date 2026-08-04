@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../widgets/glass_card.dart';
+import '../widgets/animated_counter.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -31,11 +32,11 @@ class AboutSection extends StatelessWidget {
                 Expanded(
                   child: Column(
                     children: [
-                      _buildStat("5+", "Years of Experience"),
+                      _buildStat(5, "Years of Experience", suffix: "+"),
                       const SizedBox(height: 24),
-                      _buildStat("50+", "Projects Completed"),
+                      _buildStat(50, "Projects Completed", suffix: "+"),
                       const SizedBox(height: 24),
-                      _buildStat("10+", "Global Clients"),
+                      _buildStat(10, "Global Clients", suffix: "+"),
                     ],
                   ),
                 ),
@@ -77,13 +78,14 @@ class AboutSection extends StatelessWidget {
     );
   }
 
-  Widget _buildStat(String value, String label) {
+  Widget _buildStat(int value, String label, {String suffix = ""}) {
     return GlassCard(
       padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
       child: Column(
         children: [
-          Text(
-            value,
+          AnimatedCounter(
+            targetValue: value,
+            suffix: suffix,
             style: const TextStyle(
               fontSize: 36,
               fontWeight: FontWeight.bold,
