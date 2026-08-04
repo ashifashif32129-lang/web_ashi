@@ -1,53 +1,69 @@
-# Implementation Plan - Premium Flutter App & Responsive Portfolio
+# Portfolio Overhaul Implementation Plan
 
-This plan outlines the development of two high-end Flutter projects: a premium Android UI and a modern responsive portfolio website, sharing a common Material 3 glassmorphism design language.
+Overhaul the existing Flutter portfolio to a premium, modern design inspired by Apple, Linear, and Vercel.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> **Asset Requirements**: Lottie animations and specific images (projects/logo) are required. I will use placeholder Lottie URLs and network images initially.
-> **Firebase**: Both projects will benefit from Firebase. The Android app will use it for Auth, and the Portfolio for the contact form.
+> **Typography**: I will use 'Inter' and 'Poppins' via Google Fonts as they represent the "Premium Typography" mentioned.
+> **Electric Blue**: I'll define a specific Electric Blue accent (#00E5FF or similar) to contrast against the pure black background.
 
 ## Proposed Changes
 
-### 1. Project Infrastructure & Dependencies
+### Branding & Design
 
-#### [MODIFY] [pubspec.yaml](file:///Users/admin/StudioProjects/web_ashi/pubspec.yaml)
-- Add: `animations`, `lottie`, `shimmer`, `visibility_detector`, `scrollable_positioned_list`.
+#### [MODIFY] [app_colors.dart](file:///Users/admin/StudioProjects/web_ashi/lib/constants/app_colors.dart)
+- Set background to deep black (#000000).
+- Set primary/accent to Electric Blue (#00E5FF).
+- Update Aurora gradient blob colors.
 
-#### [NEW] Directory Structure
-- `lib/screens/`: Android App screens (Splash, Onboarding, Auth, Dashboard).
-- `lib/widgets/`: Common UI components (Glass cards, Neumorphic buttons, Shimmer).
-- `lib/models/`: Data models for projects, experience, user.
-- `lib/animations/`: Custom animation controllers and transitions.
-- `lib/constants/`: Colors, strings, and theme definitions.
+#### [MODIFY] [app_theme.dart](file:///Users/admin/StudioProjects/web_ashi/lib/constants/app_theme.dart)
+- Update Material 3 theme to reflect the pure dark aesthetic with high contrast white text.
 
-### 2. Premium Android UI Implementation
+### Advanced UI Components
 
-- **Splash Screen**: Animated logo with `flutter_animate`.
-- **Onboarding**: Smooth `PageView` with parallax and shared axis transitions.
-- **Auth Flow**: Glassmorphism login/signup with shared axis page transitions.
-- **Main Dashboard**:
-    - Animated Bottom Navigation Bar.
-    - ListView with `flutter_staggered_animations` and `shimmer` loading.
-    - Hero animations for item details.
+#### [NEW] [mouse_glow.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/mouse_glow.dart)
+- A widget that tracks mouse movement on Web and renders a subtle radial gradient glow behind the content.
 
-### 3. Responsive Portfolio Website Implementation
+#### [NEW] [aurora_background.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/aurora_background.dart)
+- An animated background with large, soft, moving gradient blobs (Aurora effect).
 
-- **Hero Section**: Animated gradient background with floating shapes.
-- **Experience Timeline**: Vertical timeline with entrance animations.
-- **Projects**: Hover-zoom cards with glassmorphism.
-- **Skills**: Progress bars that animate when visible (using `visibility_detector`).
-- **Smooth Navigation**: `scrollable_positioned_list` for section-based scrolling.
+#### [MODIFY] [glass_card.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/glass_card.dart)
+- Enhance glassmorphism with better border highlights and subtle internal shadows.
 
-### 4. Global Theming
+### Sections (Modularization)
 
-- **Material 3**: Unified theme data for Light and Dark modes.
-- **Glassmorphism/Neumorphism**: Reusable styling mixins/widgets.
+I will move the sections from `PortfolioScreen` into individual files in `lib/sections/` for better maintainability and to apply specific animations to each.
+
+#### [NEW] [hero_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/hero_section.dart)
+#### [NEW] [projects_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/projects_section.dart)
+#### [NEW] [skills_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/skills_section.dart)
+#### [NEW] [experience_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/experience_section.dart)
+#### [NEW] [contact_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/contact_section.dart)
+
+### App Logic
+
+#### [MODIFY] [main.dart](file:///Users/admin/StudioProjects/web_ashi/lib/main.dart)
+- Update app title to "ASHIF".
+
+#### [MODIFY] [loading_screen.dart](file:///Users/admin/StudioProjects/web_ashi/lib/loading_screen.dart)
+- Create a minimal, high-end loading animation.
+
+### Deployment
+
+#### GitHub Pages Redeploy
+- Execute `flutter build web --base-href "/web_ashi/"`.
+- Update the `docs/` directory with the new build.
+- Commit and push to the repository.
 
 ## Verification Plan
 
+### Automated Tests
+- `flutter analyze` to ensure no code errors.
+- `flutter test` for basic widget integrity.
+
 ### Manual Verification
-- Test Android App on Emulator/Device for touch responsiveness and transitions.
-- Test Portfolio Web on Chrome/Safari for responsive breakpoints (Mobile, Tablet, Desktop).
-- Verify smooth scrolling and animation performance across platforms.
+- Verify responsive layouts on multiple viewports.
+- Check animation smoothness (60 FPS).
+- Test contact form validation.
+- Verify GitHub Pages deployment.
