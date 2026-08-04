@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import '../constants/app_colors.dart';
+import '../utils/responsive.dart';
 
 class SkillsSection extends StatefulWidget {
   const SkillsSection({super.key});
@@ -24,6 +25,8 @@ class _SkillsSectionState extends State<SkillsSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return VisibilityDetector(
       key: const Key('skills-section'),
       onVisibilityChanged: (info) {
@@ -32,30 +35,30 @@ class _SkillsSectionState extends State<SkillsSection> {
         }
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+        padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100, horizontal: isMobile ? 20 : 40),
         child: Column(
           children: [
-            const Text(
+            Text(
               "Skills",
               style: TextStyle(
-                fontSize: 48,
+                fontSize: isMobile ? 36 : 48,
                 fontWeight: FontWeight.bold,
                 letterSpacing: -1,
               ),
             ).animate().fadeIn(),
             
-            const SizedBox(height: 60),
+            SizedBox(height: isMobile ? 40 : 60),
             
             LayoutBuilder(
               builder: (context, constraints) {
                 return Wrap(
                   spacing: 40,
-                  runSpacing: 40,
+                  runSpacing: isMobile ? 24 : 40,
                   alignment: WrapAlignment.center,
                   children: _skills.map((skill) {
                     return SizedBox(
                       width: constraints.maxWidth > 800 ? (constraints.maxWidth - 80) / 2 : constraints.maxWidth,
-                      child: _buildSkillBar(skill["name"], skill["level"]),
+                      child: _buildSkillBar(skill["name"], skill["level"], isMobile),
                     );
                   }).toList(),
                 );
@@ -67,7 +70,7 @@ class _SkillsSectionState extends State<SkillsSection> {
     );
   }
 
-  Widget _buildSkillBar(String name, double level) {
+  Widget _buildSkillBar(String name, double level, bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -76,7 +79,7 @@ class _SkillsSectionState extends State<SkillsSection> {
           children: [
             Text(
               name,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+              style: TextStyle(fontSize: isMobile ? 16 : 18, fontWeight: FontWeight.w600),
             ),
             Text(
               "${(level * 100).toInt()}%",

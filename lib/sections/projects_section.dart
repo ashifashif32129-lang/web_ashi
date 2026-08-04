@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../widgets/glass_card.dart';
+import '../utils/responsive.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -31,23 +32,35 @@ class ProjectsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+    final bool isTablet = Responsive.isTablet(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100, horizontal: isMobile ? 20 : 40),
       child: Column(
         children: [
-          const Text(
+          Text(
             "Projects",
             style: TextStyle(
-              fontSize: 48,
+              fontSize: isMobile ? 36 : 48,
               fontWeight: FontWeight.bold,
               letterSpacing: -1,
             ),
           ).animate().fadeIn(),
           
-          const SizedBox(height: 60),
+          SizedBox(height: isMobile ? 40 : 60),
           
           LayoutBuilder(
             builder: (context, constraints) {
+              double cardWidth;
+              if (isMobile) {
+                cardWidth = constraints.maxWidth;
+              } else if (isTablet) {
+                cardWidth = (constraints.maxWidth - 30) / 2;
+              } else {
+                cardWidth = (constraints.maxWidth - 60) / 2;
+              }
+
               return Wrap(
                 spacing: 30,
                 runSpacing: 30,
@@ -57,7 +70,7 @@ class ProjectsSection extends StatelessWidget {
                     title: project["title"]!,
                     desc: project["desc"]!,
                     tech: project["tech"]!,
-                    width: constraints.maxWidth > 800 ? (constraints.maxWidth - 60) / 2 : constraints.maxWidth,
+                    width: cardWidth,
                   );
                 }).toList(),
               );
@@ -92,22 +105,24 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return MouseRegion(
       onEnter: (_) => setState(() => _isHovered = true),
       onExit: (_) => setState(() => _isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         width: widget.width,
-        transform: _isHovered ? Matrix4.translationValues(0, -10, 0) : Matrix4.identity(),
+        transform: (!isMobile && _isHovered) ? Matrix4.translationValues(0, -10, 0) : Matrix4.identity(),
         child: GlassCard(
           padding: EdgeInsets.zero,
-          borderColor: _isHovered ? AppColors.primary : null,
+          borderColor: (!isMobile && _isHovered) ? AppColors.primary : null,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Project Image Placeholder
               Container(
-                height: 240,
+                height: isMobile ? 200 : 240,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppColors.border.withValues(alpha: 0.2),
@@ -116,29 +131,29 @@ class _ProjectCardState extends State<ProjectCard> {
                 child: Center(
                   child: Icon(
                     Icons.work_outline,
-                    size: 60,
-                    color: _isHovered ? AppColors.primary : AppColors.textSecondary,
+                    size: isMobile ? 50 : 60,
+                    color: (!isMobile && _isHovered) ? AppColors.primary : AppColors.textSecondary,
                   ),
                 ),
               ),
               
               Padding(
-                padding: const EdgeInsets.all(24.0),
+                padding: EdgeInsets.all(isMobile ? 20.0 : 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       widget.title,
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: TextStyle(
+                        fontSize: isMobile ? 20 : 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 12),
                     Text(
                       widget.desc,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: isMobile ? 14 : 16,
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
@@ -146,8 +161,8 @@ class _ProjectCardState extends State<ProjectCard> {
                     const SizedBox(height: 20),
                     Text(
                       widget.tech,
-                      style: const TextStyle(
-                        fontSize: 14,
+                      style: TextStyle(
+                        fontSize: isMobile ? 12 : 14,
                         color: AppColors.primary,
                         fontWeight: FontWeight.w600,
                         letterSpacing: 1,

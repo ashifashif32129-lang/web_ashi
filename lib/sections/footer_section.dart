@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../utils/responsive.dart';
 
 class FooterSection extends StatelessWidget {
   const FooterSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 40 : 60, horizontal: isMobile ? 20 : 40),
       decoration: BoxDecoration(
         color: Colors.black,
         border: Border(top: BorderSide(color: AppColors.border, width: 1)),
@@ -23,23 +26,36 @@ class FooterSection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-          const Text(
+          Text(
             "Flutter Developer • UI/UX Enthusiast • Open Source Contributor",
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+            textAlign: TextAlign.center,
+            style: TextStyle(color: AppColors.textSecondary, fontSize: isMobile ? 12 : 14),
           ),
           const SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildFooterLink("GitHub"),
-              const SizedBox(width: 32),
-              _buildFooterLink("LinkedIn"),
-              const SizedBox(width: 32),
-              _buildFooterLink("Twitter"),
-              const SizedBox(width: 32),
-              _buildFooterLink("Instagram"),
-            ],
-          ),
+          isMobile
+              ? Wrap(
+                  spacing: 20,
+                  runSpacing: 16,
+                  alignment: WrapAlignment.center,
+                  children: [
+                    _buildFooterLink("GitHub"),
+                    _buildFooterLink("LinkedIn"),
+                    _buildFooterLink("Twitter"),
+                    _buildFooterLink("Instagram"),
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _buildFooterLink("GitHub"),
+                    const SizedBox(width: 32),
+                    _buildFooterLink("LinkedIn"),
+                    const SizedBox(width: 32),
+                    _buildFooterLink("Twitter"),
+                    const SizedBox(width: 32),
+                    _buildFooterLink("Instagram"),
+                  ],
+                ),
           const SizedBox(height: 40),
           Text(
             "© ${DateTime.now().year} Ashif. All rights reserved.",

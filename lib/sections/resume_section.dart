@@ -2,46 +2,50 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../widgets/glass_card.dart';
+import '../utils/responsive.dart';
 
 class ResumeSection extends StatelessWidget {
   const ResumeSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100, horizontal: isMobile ? 20 : 40),
       child: Center(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 800),
           child: GlassCard(
-            padding: const EdgeInsets.all(60),
+            padding: EdgeInsets.all(isMobile ? 32 : 60),
             borderColor: AppColors.primary.withValues(alpha: 0.3),
             child: Column(
               children: [
-                const Icon(
+                Icon(
                   Icons.description_outlined,
-                  size: 80,
+                  size: isMobile ? 60 : 80,
                   color: AppColors.primary,
                 ).animate(onPlay: (controller) => controller.repeat(reverse: true))
                  .moveY(begin: -10, end: 10, duration: 2.seconds),
                 
                 const SizedBox(height: 32),
                 
-                const Text(
+                Text(
                   "Interested in my work?",
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: isMobile ? 24 : 32,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 
                 const SizedBox(height: 16),
                 
-                const Text(
+                Text(
                   "Download my full resume to see more details about my technical skills, education, and professional journey.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: isMobile ? 16 : 18,
                     color: AppColors.textSecondary,
                     height: 1.5,
                   ),
@@ -49,20 +53,23 @@ class ResumeSection extends StatelessWidget {
                 
                 const SizedBox(height: 48),
                 
-                ElevatedButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.download_rounded),
-                  label: const Text("DOWNLOAD RESUME"),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: Colors.black,
-                    padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
-                    textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                    elevation: 10,
-                    shadowColor: AppColors.primary.withValues(alpha: 0.5),
-                  ),
-                ).animate().scale(delay: 500.ms),
+                SizedBox(
+                  width: isMobile ? double.infinity : null,
+                  child: ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.download_rounded),
+                    label: const Text("DOWNLOAD RESUME"),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 24),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+                      textStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      elevation: 10,
+                      shadowColor: AppColors.primary.withValues(alpha: 0.5),
+                    ),
+                  ).animate().scale(delay: 500.ms),
+                ),
               ],
             ),
           ),

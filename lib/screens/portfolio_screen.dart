@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import '../constants/app_colors.dart';
+import '../utils/responsive.dart';
 import '../widgets/aurora_background.dart';
 import '../widgets/glass_card.dart';
 import '../widgets/mouse_glow.dart';
@@ -23,6 +24,7 @@ class PortfolioScreen extends StatefulWidget {
 class _PortfolioScreenState extends State<PortfolioScreen> {
   final ItemScrollController _itemScrollController = ItemScrollController();
   final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<String> _sections = [
     "Home",
@@ -40,12 +42,19 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       duration: const Duration(seconds: 1),
       curve: Curves.easeInOutCubic,
     );
+    if (_scaffoldKey.currentState?.isDrawerOpen ?? false) {
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: AppColors.background,
+      drawer: isMobile ? _buildDrawer() : null,
       body: MouseGlow(
         child: Stack(
           children: [
@@ -64,7 +73,18 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ),
             
             // Navigation Bar
-            _buildNavBar(),
+            if (!isMobile) _buildNavBar(),
+            
+            // Mobile Menu Button
+            if (isMobile)
+              Positioned(
+                top: 20,
+                left: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.white, size: 30),
+                  onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                ),
+              ),
           ],
         ),
       ),
@@ -124,6 +144,38 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildDrawer() {
+    return Drawer(
+      backgroundColor: AppColors.background,
+      child: Column(
+        children: [
+          const DrawerHeader(
+            child: Center(
+              child: Text(
+                "ASHIF",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: 2,
+                ),
+              ),
+            ),
+          ),
+          ...List.generate(_sections.length, (index) {
+            return ListTile(
+              title: Text(
+                _sections[index],
+                style: const TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              onTap: () => _scrollTo(index),
+            );
+          }),
+        ],
       ),
     );
   }

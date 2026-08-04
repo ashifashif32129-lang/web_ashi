@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../constants/app_colors.dart';
 import '../widgets/glass_card.dart';
+import '../utils/responsive.dart';
 
 class ContactSection extends StatefulWidget {
   const ContactSection({super.key});
@@ -16,44 +17,48 @@ class _ContactSectionState extends State<ContactSection> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+    final bool isTablet = Responsive.isTablet(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100, horizontal: isMobile ? 20 : 40),
       child: Column(
         children: [
-          const Text(
+          Text(
             "Get in Touch",
             style: TextStyle(
-              fontSize: 48,
+              fontSize: isMobile ? 36 : 48,
               fontWeight: FontWeight.bold,
               letterSpacing: -1,
             ),
           ).animate().fadeIn(),
           
-          const SizedBox(height: 60),
+          SizedBox(height: isMobile ? 40 : 60),
           
           Container(
-            constraints: const BoxConstraints(maxWidth: 900),
-            child: Row(
+            constraints: const BoxConstraints(maxWidth: 1000),
+            child: Flex(
+              direction: (isMobile || isTablet) ? Axis.vertical : Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Info Side
-                Expanded(
-                  flex: 2,
+                Flexible(
+                  flex: (isMobile || isTablet) ? 0 : 2,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         "Let's build something extraordinary together.",
                         style: TextStyle(
-                          fontSize: 28,
+                          fontSize: isMobile ? 24 : 28,
                           fontWeight: FontWeight.bold,
                           height: 1.3,
                         ),
                       ),
                       const SizedBox(height: 32),
-                      _buildContactInfo(Icons.email_outlined, "Email", "ashifashif32129@gmail.com"),
+                      _buildContactInfo(Icons.email_outlined, "Email", "ashifashif32129@gmail.com", isMobile),
                       const SizedBox(height: 24),
-                      _buildContactInfo(Icons.phone_outlined, "Phone", "+91 7306238617"),
+                      _buildContactInfo(Icons.phone_outlined, "Phone", "+91 7306238617", isMobile),
                       const SizedBox(height: 48),
                       const Text(
                         "Socials",
@@ -73,12 +78,13 @@ class _ContactSectionState extends State<ContactSection> {
                   ),
                 ),
                 
-                const SizedBox(width: 60),
+                SizedBox(width: (isMobile || isTablet) ? 0 : 60, height: (isMobile || isTablet) ? 60 : 0),
                 
                 // Form Side
-                Expanded(
-                  flex: 3,
+                Flexible(
+                  flex: (isMobile || isTablet) ? 0 : 3,
                   child: GlassCard(
+                    padding: EdgeInsets.all(isMobile ? 20 : 32),
                     child: Form(
                       key: _formKey,
                       child: Column(
@@ -123,7 +129,7 @@ class _ContactSectionState extends State<ContactSection> {
     );
   }
 
-  Widget _buildContactInfo(IconData icon, String label, String value) {
+  Widget _buildContactInfo(IconData icon, String label, String value, bool isMobile) {
     return Row(
       children: [
         Container(
@@ -132,14 +138,14 @@ class _ContactSectionState extends State<ContactSection> {
             color: AppColors.primary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(icon, color: AppColors.primary, size: 24),
+          child: Icon(icon, color: AppColors.primary, size: isMobile ? 20 : 24),
         ),
         const SizedBox(width: 20),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 14)),
-            Text(value, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(value, style: TextStyle(fontSize: isMobile ? 14 : 16, fontWeight: FontWeight.bold)),
           ],
         ),
       ],

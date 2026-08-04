@@ -1,69 +1,58 @@
-# Portfolio Overhaul Implementation Plan
+# Responsive Portfolio Implementation Plan
 
-Overhaul the existing Flutter portfolio to a premium, modern design inspired by Apple, Linear, and Vercel.
+Make the ASHIF portfolio fully responsive with dedicated layouts for Mobile, Tablet, and Desktop.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> **Typography**: I will use 'Inter' and 'Poppins' via Google Fonts as they represent the "Premium Typography" mentioned.
-> **Electric Blue**: I'll define a specific Electric Blue accent (#00E5FF or similar) to contrast against the pure black background.
+> **Navigation**: Mobile will use a Drawer or Bottom Sheet for navigation, while Desktop/Tablet will keep the floating Glassmorphism Navbar.
+> **Animations**: Hover effects will be disabled on Mobile to prevent sticky states on touch.
 
 ## Proposed Changes
 
-### Branding & Design
+### [Component: Utilities]
 
-#### [MODIFY] [app_colors.dart](file:///Users/admin/StudioProjects/web_ashi/lib/constants/app_colors.dart)
-- Set background to deep black (#000000).
-- Set primary/accent to Electric Blue (#00E5FF).
-- Update Aurora gradient blob colors.
+#### [NEW] [responsive.dart](file:///Users/admin/StudioProjects/web_ashi/lib/utils/responsive.dart)
+- Define breakpoints: Mobile (< 600), Tablet (600-1024), Desktop (> 1024).
 
-#### [MODIFY] [app_theme.dart](file:///Users/admin/StudioProjects/web_ashi/lib/constants/app_theme.dart)
-- Update Material 3 theme to reflect the pure dark aesthetic with high contrast white text.
+### [Component: Screens]
 
-### Advanced UI Components
+#### [MODIFY] [portfolio_screen.dart](file:///Users/admin/StudioProjects/web_ashi/lib/screens/portfolio_screen.dart)
+- Implement `Scaffold` drawer for Mobile.
+- Conditional rendering of the Navbar.
+- Adjust vertical spacing between sections for smaller screens.
 
-#### [NEW] [mouse_glow.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/mouse_glow.dart)
-- A widget that tracks mouse movement on Web and renders a subtle radial gradient glow behind the content.
+### [Component: Sections]
 
-#### [NEW] [aurora_background.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/aurora_background.dart)
-- An animated background with large, soft, moving gradient blobs (Aurora effect).
+#### [MODIFY] [hero_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/hero_section.dart)
+- Scale down font sizes for Mobile.
+- Change horizontal alignment if needed (center for all is usually fine).
+- Adjust button padding for touch targets.
 
-#### [MODIFY] [glass_card.dart](file:///Users/admin/StudioProjects/web_ashi/lib/widgets/glass_card.dart)
-- Enhance glassmorphism with better border highlights and subtle internal shadows.
+#### [MODIFY] [about_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/about_section.dart)
+- Switch from Row (Desktop) to Column (Mobile) for Stats and Description.
+- Adjust stat card grid/layout for Tablet.
 
-### Sections (Modularization)
+#### [MODIFY] [skills_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/skills_section.dart)
+- Adjust `Wrap` spacing and item width based on screen size.
 
-I will move the sections from `PortfolioScreen` into individual files in `lib/sections/` for better maintainability and to apply specific animations to each.
+#### [MODIFY] [projects_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/projects_section.dart)
+- Update `ProjectCard` width calculations for 1, 2, or 3 columns.
+- Disable hover lift on Mobile.
 
-#### [NEW] [hero_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/hero_section.dart)
-#### [NEW] [projects_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/projects_section.dart)
-#### [NEW] [skills_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/skills_section.dart)
-#### [NEW] [experience_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/experience_section.dart)
-#### [NEW] [contact_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/contact_section.dart)
+#### [MODIFY] [experience_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/experience_section.dart)
+- Adjust timeline padding and icon size for Mobile.
 
-### App Logic
+#### [MODIFY] [contact_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/contact_section.dart)
+- Switch from Row to Column for Contact Info and Form on Mobile/Tablet.
 
-#### [MODIFY] [main.dart](file:///Users/admin/StudioProjects/web_ashi/lib/main.dart)
-- Update app title to "ASHIF".
-
-#### [MODIFY] [loading_screen.dart](file:///Users/admin/StudioProjects/web_ashi/lib/loading_screen.dart)
-- Create a minimal, high-end loading animation.
-
-### Deployment
-
-#### GitHub Pages Redeploy
-- Execute `flutter build web --base-href "/web_ashi/"`.
-- Update the `docs/` directory with the new build.
-- Commit and push to the repository.
+#### [MODIFY] [footer_section.dart](file:///Users/admin/StudioProjects/web_ashi/lib/sections/footer_section.dart)
+- Adjust link spacing and text alignment for Mobile.
 
 ## Verification Plan
 
-### Automated Tests
-- `flutter analyze` to ensure no code errors.
-- `flutter test` for basic widget integrity.
-
 ### Manual Verification
-- Verify responsive layouts on multiple viewports.
-- Check animation smoothness (60 FPS).
-- Test contact form validation.
-- Verify GitHub Pages deployment.
+- Test on Chrome DevTools responsive mode (iPhone SE, Pixel 7, iPad Air, Desktop 1080p).
+- Ensure no horizontal overflow on any device.
+- Verify touch-friendliness of buttons and forms.
+- Confirm animations perform smoothly on mobile viewports.

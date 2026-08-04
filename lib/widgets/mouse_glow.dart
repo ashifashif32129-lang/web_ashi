@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constants/app_colors.dart';
+import '../utils/responsive.dart';
 
 class MouseGlow extends StatefulWidget {
   final Widget child;
@@ -15,6 +16,8 @@ class _MouseGlowState extends State<MouseGlow> {
 
   @override
   Widget build(BuildContext context) {
+    if (Responsive.isMobile(context)) return widget.child;
+
     return MouseRegion(
       onHover: (event) {
         setState(() {

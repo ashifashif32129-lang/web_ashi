@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../constants/app_colors.dart';
 import '../widgets/glass_card.dart';
+import '../utils/responsive.dart';
 
 class ExperienceSection extends StatelessWidget {
   const ExperienceSection({super.key});
@@ -29,26 +30,28 @@ class ExperienceSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool isMobile = Responsive.isMobile(context);
+
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 100, horizontal: 40),
+      padding: EdgeInsets.symmetric(vertical: isMobile ? 60 : 100, horizontal: isMobile ? 20 : 40),
       child: Column(
         children: [
-          const Text(
+          Text(
             "Experience",
             style: TextStyle(
-              fontSize: 48,
+              fontSize: isMobile ? 36 : 48,
               fontWeight: FontWeight.bold,
               letterSpacing: -1,
             ),
           ).animate().fadeIn(),
           
-          const SizedBox(height: 60),
+          SizedBox(height: isMobile ? 40 : 60),
           
           Container(
             constraints: const BoxConstraints(maxWidth: 800),
             child: Column(
               children: _experience.map((exp) {
-                return _buildTimelineItem(exp["date"]!, exp["role"]!, exp["company"]!, exp["desc"]!);
+                return _buildTimelineItem(exp["date"]!, exp["role"]!, exp["company"]!, exp["desc"]!, isMobile);
               }).toList(),
             ),
           ),
@@ -57,15 +60,15 @@ class ExperienceSection extends StatelessWidget {
     );
   }
 
-  Widget _buildTimelineItem(String date, String role, String company, String desc) {
+  Widget _buildTimelineItem(String date, String role, String company, String desc, bool isMobile) {
     return IntrinsicHeight(
       child: Row(
         children: [
           Column(
             children: [
               Container(
-                width: 16,
-                height: 16,
+                width: isMobile ? 12 : 16,
+                height: isMobile ? 12 : 16,
                 decoration: BoxDecoration(
                   color: AppColors.primary,
                   shape: BoxShape.circle,
@@ -85,43 +88,45 @@ class ExperienceSection extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(width: 32),
+          SizedBox(width: isMobile ? 16 : 32),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 50),
+              padding: EdgeInsets.only(bottom: isMobile ? 30 : 50),
               child: GlassCard(
+                padding: EdgeInsets.all(isMobile ? 16 : 24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       date,
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: AppColors.primary,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
+                        fontSize: isMobile ? 12 : 14,
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Text(
                       role,
-                      style: const TextStyle(
-                        fontSize: 24,
+                      style: TextStyle(
+                        fontSize: isMobile ? 18 : 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       company,
-                      style: const TextStyle(
-                        fontSize: 18,
+                      style: TextStyle(
+                        fontSize: isMobile ? 14 : 18,
                         color: AppColors.textSecondary,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 12),
                     Text(
                       desc,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: TextStyle(
+                        fontSize: isMobile ? 14 : 16,
                         color: AppColors.textSecondary,
                         height: 1.5,
                       ),
