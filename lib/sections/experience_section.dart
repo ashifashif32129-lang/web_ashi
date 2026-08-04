@@ -10,21 +10,21 @@ class ExperienceSection extends StatelessWidget {
   final List<Map<String, String>> _experience = const [
     {
       "date": "2025 - Present",
-      "role": " Flutter Developer",
-      "company": "Tech Solutions Inc.",
-      "desc": "Leading a team of developers to build high-scale fintech applications for international clients.",
-    },
-    {
-      "date": "2021 - 2023",
       "role": "Flutter Developer",
-      "company": "Creative Apps Agency",
-      "desc": "Developed over 10 cross-platform mobile applications with custom UI and smooth animations.",
+      "company": "Freelance & Personal Projects",
+      "desc": "Building responsive Flutter mobile and web applications using Flutter, Dart, Firebase, and modern UI/UX principles. Continuously improving skills through real-world projects.",
     },
     {
-      "date": "2020 - 2021",
-      "role": "Junior App Developer",
-      "company": "Startup Hub",
-      "desc": "Assisted in the development of MVPs for various startups using Flutter and Firebase.",
+      "date": "2025",
+      "role": "Flutter Trainee",
+      "company": "Self Learning",
+      "desc": "Learned Flutter, Dart, Firebase, state management, REST APIs, and responsive UI development through hands-on practice and projects.",
+    },
+    {
+      "date": "2025 - Present",
+      "role": "App Developer",
+      "company": "Portfolio Projects",
+      "desc": "Developed multiple Flutter applications including portfolio websites, productivity apps, and Firebase-integrated projects with clean architecture.",
     },
   ];
 
