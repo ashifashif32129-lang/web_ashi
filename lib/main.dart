@@ -5,16 +5,23 @@ import 'firebase_options.dart';
 import 'loading_screen.dart';
 import 'utils/constants.dart';
 
-void main() async {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Firebase in the background without blocking the UI
+  _initializeFirebase();
+  
+  runApp(const MyApp());
+}
+
+Future<void> _initializeFirebase() async {
   try {
-    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
   } catch (e) {
-    debugPrint("Firebase initialization failed: $e");
+    debugPrint("Firebase background initialization failed: $e");
   }
-  runApp(const MyApp());
 }
 
 final themeNotifier = ValueNotifier<ThemeMode>(ThemeMode.dark);
